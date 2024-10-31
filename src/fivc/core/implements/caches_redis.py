@@ -1,13 +1,12 @@
 from datetime import timedelta
 from typing import Optional
 
-from fivc.interfaces import IComponentSite
-from fivc.interfaces import caches
-from fivc.interfaces.utils import implements
+from fivc.core.interfaces import IComponentSite, caches
+from fivc.core.interfaces.utils import implements
 
 
 @implements(caches.ICache)
-class CacheImpl(object):
+class CacheImpl:
 
     def __init__(
             self,

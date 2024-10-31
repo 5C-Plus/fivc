@@ -1,8 +1,6 @@
 from typing import Optional
-from fivc.interfaces import (
-    abstractmethod,
-    IComponent,
-)
+
+from . import IComponent, abstractmethod
 
 
 class ILogger(IComponent):
@@ -16,7 +14,7 @@ class ILogger(IComponent):
             msg: Optional[str] = None,
             attrs: Optional[dict] = None,
             error: Optional[Exception] = None,
-    ):
+    ) -> None:
         """
         log info
         """
@@ -27,7 +25,7 @@ class ILogger(IComponent):
             msg: Optional[str] = None,
             attrs: Optional[dict] = None,
             error: Optional[Exception] = None,
-    ):
+    ) -> None:
         """
         log warning
         """
@@ -38,7 +36,7 @@ class ILogger(IComponent):
             msg: Optional[str] = None,
             attrs: Optional[dict] = None,
             error: Optional[Exception] = None,
-    ):
+    ) -> None:
         """
         log error
         """

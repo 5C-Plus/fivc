@@ -1,23 +1,23 @@
 - entries:
-    - interface: fivc.interfaces.configs.IConfig
+    - interface: fivc.core.interfaces.configs.IConfig
       name: 'Json'
 
-  class: fivc.implements.configs_jsonfile.ConfigImpl
+  class: fivc.core.implements.configs_jsonfile.ConfigImpl
 
 - entries:
-    - interface: fivc.interfaces.configs.IConfig
+    - interface: fivc.core.interfaces.configs.IConfig
       name: 'Yaml'
 
-  class: fivc.implements.configs_yamlfile.ConfigImpl
+  class: fivc.core.implements.configs_yamlfile.ConfigImpl
 
 - entries:
-    - interface: fivc.interfaces.loggers.ILoggerSite
+    - interface: fivc.core.interfaces.loggers.ILoggerSite
       name: 'Default'
 
-  class: fivc.implements.loggers_default.LoggerSiteImpl
+  class: fivc.core.implements.loggers_default.LoggerSiteImpl
 
 - entries:
-    - interface: fivc.interfaces.caches.ICache
+    - interface: fivc.core.interfaces.caches.ICache
       name: 'Redis'
 
-  class: fivc.implements.caches_redis.CacheImpl
+  class: fivc.core.implements.caches_redis.CacheImpl

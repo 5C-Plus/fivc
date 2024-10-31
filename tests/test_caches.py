@@ -1,8 +1,8 @@
 import unittest
 
-from fivc.interfaces import caches
-from fivc.interfaces.utils import query_component
-from fivc.implements.utils import load_component_site
+from fivc.core.implements.utils import load_component_site
+from fivc.core.interfaces import caches
+from fivc.core.interfaces.utils import query_component
 
 
 class TestCaches(unittest.TestCase):

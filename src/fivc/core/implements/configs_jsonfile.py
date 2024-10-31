@@ -2,13 +2,12 @@ import json
 import os
 from typing import Optional
 
-from fivc.interfaces import IComponentSite
-from fivc.interfaces import configs
-from fivc.interfaces.utils import implements
+from fivc.core.interfaces import IComponentSite, configs
+from fivc.core.interfaces.utils import implements
 
 
 @implements(configs.IConfigSession)
-class ConfigSessionImp(object):
+class ConfigSessionImp:
 
     def __init__(self, **kwargs):
         self.kwargs = kwargs
@@ -18,7 +17,7 @@ class ConfigSessionImp(object):
 
 
 @implements(configs.IConfig)
-class ConfigImpl(object):
+class ConfigImpl:
     """
     implement config
     """
@@ -27,7 +26,7 @@ class ConfigImpl(object):
         print('create config component of json file')
         try:
             filename = os.environ.setdefault('CONFIG_JSON', '.env.json')
-            with open(filename, 'r') as file:
+            with open(filename) as file:
                 self.sessions = json.loads(file.read())
         except (FileNotFoundError, ValueError, TypeError):
             self.sessions = {}

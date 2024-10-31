@@ -1,4 +1,5 @@
-from fivc.interfaces import IComponentSite
+from fivc.core.interfaces import IComponentSite
+
 from . import (
     ComponentSite,
     ComponentSiteBuilder,

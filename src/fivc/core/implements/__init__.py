@@ -5,12 +5,12 @@ from typing import (
     Union,
 )
 
-from fivc.interfaces import (
+from fivc.core.interfaces import (
     IComponent,
     IComponentSite,
     IComponentSiteBuilder,
 )
-from fivc.interfaces.utils import (
+from fivc.core.interfaces.utils import (
     import_string,
 )
 
@@ -79,7 +79,7 @@ class ComponentSiteBuilder(IComponentSiteBuilder):
                 service_class = import_string(service_class_name)
             except ImportError:
                 raise ValueError(
-                    'invalid component class {}'.format(service_class_name))
+                    f'invalid component class {service_class_name}')
 
             service_instance = service_class(component_site, **config_item)
             for e in service_entries_name:
@@ -92,8 +92,7 @@ class ComponentSiteBuilder(IComponentSiteBuilder):
                 try:
                     service_interface = import_string(service_interface_name)
                 except ImportError:
-                    raise ValueError('invalid component interface {}'.format(
-                        service_interface_name))
+                    raise ValueError(f'invalid component interface {service_interface_name}')
 
                 component_site.register_component(
                     service_interface, service_instance, name=service_name)
@@ -123,4 +122,4 @@ class ComponentSiteBuilder(IComponentSiteBuilder):
             configs: TextIO,
             fmt: str = 'json',
     ):
-        raise NotImplementedError()
+        raise NotImplementedError

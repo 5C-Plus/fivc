@@ -1,9 +1,7 @@
 from datetime import timedelta
 from typing import Optional
-from fivc.interfaces import (
-    abstractmethod,
-    IComponent,
-)
+
+from . import IComponent, abstractmethod
 
 
 class ICache(IComponent):
@@ -12,7 +10,10 @@ class ICache(IComponent):
     """
 
     @abstractmethod
-    def get_value(self, key_name: str) -> Optional[bytes]:
+    def get_value(
+            self,
+            key_name: str,
+    ) -> Optional[bytes]:
         """
         get value by key name
         """

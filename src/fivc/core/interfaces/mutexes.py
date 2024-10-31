@@ -1,9 +1,7 @@
 from datetime import timedelta
 from typing import Optional
-from fivc.interfaces import (
-    abstractmethod,
-    IComponent,
-)
+
+from . import IComponent, abstractmethod
 
 
 class IMutex(IComponent):
@@ -34,7 +32,10 @@ class IMutexSite(IComponent):
     """
 
     @abstractmethod
-    def get_mutex(self, mtx_name: str) -> Optional[IMutex]:
+    def get_mutex(
+            self,
+            mtx_name: str
+    ) -> Optional[IMutex]:
         """
         get mutex by name
         """

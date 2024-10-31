@@ -1,13 +1,12 @@
 import os
 from typing import Optional
 
-from fivc.interfaces import IComponentSite
-from fivc.interfaces import configs
-from fivc.interfaces.utils import implements
+from fivc.core.interfaces import IComponentSite, configs
+from fivc.core.interfaces.utils import implements
 
 
 @implements(configs.IConfigSession)
-class ConfigSessionImpl(object):
+class ConfigSessionImpl:
 
     def __init__(self, **kwargs):
         self.kwargs = kwargs
@@ -17,7 +16,7 @@ class ConfigSessionImpl(object):
 
 
 @implements(configs.IConfig)
-class ConfigImpl(object):
+class ConfigImpl:
     """
     implement config
     """
@@ -27,7 +26,7 @@ class ConfigImpl(object):
         try:
             import yaml
             with open(os.environ.setdefault(
-                    'CONFIG_YAML', '.env.yml'), 'r') as f:
+                    'CONFIG_YAML', '.env.yml')) as f:
                 self.sessions = yaml.safe_load(f)
         except (FileNotFoundError, ValueError, TypeError):
             self.sessions = {}

@@ -1,9 +1,9 @@
 import os
 import unittest
 
-from fivc.interfaces import configs
-from fivc.interfaces.utils import query_component
-from fivc.implements.utils import load_component_site
+from fivc.core.implements.utils import load_component_site
+from fivc.core.interfaces import configs
+from fivc.core.interfaces.utils import query_component
 
 
 class TestConfigs(unittest.TestCase):

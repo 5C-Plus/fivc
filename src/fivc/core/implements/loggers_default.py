@@ -1,14 +1,13 @@
-from logging import getLogger, Logger
+from logging import Logger, getLogger
 from traceback import format_exc
 from typing import Optional
 
-from fivc.interfaces import IComponentSite
-from fivc.interfaces import loggers
-from fivc.interfaces.utils import implements
+from fivc.core.interfaces import IComponentSite, loggers
+from fivc.core.interfaces.utils import implements
 
 
 @implements(loggers.ILogger)
-class LoggerImpl(object):
+class LoggerImpl:
     """
     default logger
     """
@@ -42,7 +41,7 @@ class LoggerImpl(object):
 
 
 @implements(loggers.ILoggerSite)
-class LoggerSiteImpl(object):
+class LoggerSiteImpl:
 
     def __init__(self, component_site: IComponentSite, **kwargs):
         print('create logger site component of default')

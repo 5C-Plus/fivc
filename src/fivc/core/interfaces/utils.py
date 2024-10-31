@@ -2,12 +2,13 @@ from importlib import import_module
 from typing import (
     Any,
     Callable,
-    Optional,
     List,
+    Optional,
     Type,
     TypeVar,
     Union,
 )
+
 from . import IComponent, IComponentSite
 
 _Int = TypeVar('_Int')  # interface class

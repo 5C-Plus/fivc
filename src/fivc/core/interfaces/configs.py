@@ -1,8 +1,6 @@
 from typing import Optional
-from fivc.interfaces import (
-    abstractmethod,
-    IComponent,
-)
+
+from . import IComponent, abstractmethod
 
 
 class IConfigSession(IComponent):
