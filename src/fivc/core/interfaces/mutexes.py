@@ -1,7 +1,12 @@
-from datetime import timedelta
-from typing import Optional
+from __future__ import annotations
 
-from . import IComponent, abstractmethod
+from abc import abstractmethod
+from typing import TYPE_CHECKING
+
+from fivc.core import IComponent
+
+if TYPE_CHECKING:
+    from datetime import timedelta
 
 
 class IMutex(IComponent):
@@ -11,9 +16,9 @@ class IMutex(IComponent):
 
     @abstractmethod
     def acquire(
-            self,
-            expire: timedelta,
-            blocking: bool = True,
+        self,
+        expire: timedelta,
+        method: str = "blocking",
     ) -> bool:
         """
         acquire mutex
@@ -32,10 +37,7 @@ class IMutexSite(IComponent):
     """
 
     @abstractmethod
-    def get_mutex(
-            self,
-            mtx_name: str
-    ) -> Optional[IMutex]:
+    def get_mutex(self, mtx_name: str) -> IMutex | None:
         """
         get mutex by name
         """

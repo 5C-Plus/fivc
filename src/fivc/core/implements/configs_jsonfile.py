@@ -1,31 +1,31 @@
+from __future__ import annotations
+
 import json
 import os
-from typing import Optional
 
-from fivc.core.interfaces import IComponentSite, configs
-from fivc.core.interfaces.utils import implements
+from fivc.core import IComponentSite, utils
+from fivc.core.interfaces import configs
 
 
-@implements(configs.IConfigSession)
+@utils.implements(configs.IConfigSession)
 class ConfigSessionImp:
-
     def __init__(self, **kwargs):
         self.kwargs = kwargs
 
-    def get_value(self, key_name: str) -> Optional[str]:
+    def get_value(self, key_name: str) -> str | None:
         return self.kwargs.get(key_name)
 
 
-@implements(configs.IConfig)
+@utils.implements(configs.IConfig)
 class ConfigImpl:
     """
     implement config
     """
 
-    def __init__(self, component_site: IComponentSite, **kwargs):
-        print('create config component of json file')
+    def __init__(self, _component_site: IComponentSite, **_kwargs):
+        print("create config component of json file")  # noqa
         try:
-            filename = os.environ.setdefault('CONFIG_JSON', '.env.json')
+            filename = os.environ.setdefault("CONFIG_JSON", ".env.json")
             with open(filename) as file:
                 self.sessions = json.loads(file.read())
         except (FileNotFoundError, ValueError, TypeError):

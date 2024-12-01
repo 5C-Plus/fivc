@@ -1,7 +1,12 @@
-from datetime import timedelta
-from typing import Optional
+from __future__ import annotations
 
-from . import IComponent, abstractmethod
+from abc import abstractmethod
+from typing import TYPE_CHECKING
+
+from fivc.core import IComponent
+
+if TYPE_CHECKING:
+    from datetime import timedelta
 
 
 class ICache(IComponent):
@@ -11,19 +16,19 @@ class ICache(IComponent):
 
     @abstractmethod
     def get_value(
-            self,
-            key_name: str,
-    ) -> Optional[bytes]:
+        self,
+        key_name: str,
+    ) -> bytes | None:
         """
         get value by key name
         """
 
     @abstractmethod
     def set_value(
-            self,
-            key_name: str,
-            value: Optional[bytes],
-            expire: timedelta,  # always set expire time
+        self,
+        key_name: str,
+        value: bytes | None,
+        expire: timedelta,  # always set expire time
     ) -> bool:
         """
         set value

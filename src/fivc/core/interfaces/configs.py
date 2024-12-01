@@ -1,6 +1,8 @@
-from typing import Optional
+from __future__ import annotations
 
-from . import IComponent, abstractmethod
+from abc import abstractmethod
+
+from fivc.core import IComponent
 
 
 class IConfigSession(IComponent):
@@ -10,9 +12,9 @@ class IConfigSession(IComponent):
 
     @abstractmethod
     def get_value(
-            self,
-            key_name: str,
-    ) -> Optional[str]:
+        self,
+        key_name: str,
+    ) -> str | None:
         """
         get value by key
         """
@@ -25,9 +27,9 @@ class IConfig(IComponent):
 
     @abstractmethod
     def get_session(
-            self,
-            session_name: str,
-    ) -> Optional[IConfigSession]:
+        self,
+        session_name: str,
+    ) -> IConfigSession | None:
         """
         get config session by name
         """

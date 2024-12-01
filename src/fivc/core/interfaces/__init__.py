@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from abc import ABCMeta, abstractmethod
-from typing import Optional, TextIO
+from typing import TextIO
 
 
 class IComponent(metaclass=ABCMeta):
@@ -9,22 +11,21 @@ class IComponent(metaclass=ABCMeta):
 
     @abstractmethod
     def query_component(
-            self,
-            interface: type,
-            name: str = '',
-    ) -> Optional['IComponent']:
+        self,
+        interface: type,
+        name: str = "",
+    ) -> IComponent | None:
         """
         get another component by entry
         """
 
 
 class IComponentSite(metaclass=ABCMeta):
-
     @abstractmethod
     def get_component(
-            self,
-            interface: type,
-            name: str = '',
+        self,
+        interface: type,
+        name: str = "",
     ) -> IComponent:
         """
         get component instance by component entry
@@ -33,20 +34,20 @@ class IComponentSite(metaclass=ABCMeta):
 
     @abstractmethod
     def query_component(
-            self,
-            interface: type,
-            name: str = '',
-    ) -> Optional['IComponent']:
+        self,
+        interface: type,
+        name: str = "",
+    ) -> IComponent | None:
         """
         query component instance by component entry
         """
 
     @abstractmethod
     def register_component(
-            self,
-            interface: type,
-            implement: IComponent,
-            name: str = '',
+        self,
+        interface: type,
+        implement: IComponent,
+        name: str = "",
     ) -> IComponent:
         """
         register component with component entries
@@ -54,13 +55,12 @@ class IComponentSite(metaclass=ABCMeta):
 
 
 class IComponentSiteBuilder(metaclass=ABCMeta):
-
     @abstractmethod
     def loads(
-            self,
-            component_site: IComponentSite,
-            configs: TextIO,
-            fmt: str = 'json',
+        self,
+        component_site: IComponentSite,
+        configs: TextIO,
+        fmt: str = "json",
     ):
         """
         register component to component site by reading configuration file
@@ -68,10 +68,10 @@ class IComponentSiteBuilder(metaclass=ABCMeta):
 
     @abstractmethod
     def dumps(
-            self,
-            component_site: IComponentSite,
-            configs: TextIO,
-            fmt: str = 'json',
+        self,
+        component_site: IComponentSite,
+        configs: TextIO,
+        fmt: str = "json",
     ):
         """
         save component from component site to configuration file

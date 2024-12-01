@@ -1,30 +1,33 @@
-from datetime import timedelta
-from typing import Optional
+from __future__ import annotations
 
-from fivc.core.interfaces import IComponentSite, caches
-from fivc.core.interfaces.utils import implements
+from typing import TYPE_CHECKING
+
+from fivc.core import IComponentSite, utils
+from fivc.core.interfaces import caches
+
+if TYPE_CHECKING:
+    from datetime import timedelta
 
 
-@implements(caches.ICache)
+@utils.implements(caches.ICache)
 class CacheImpl:
-
     def __init__(
-            self,
-            component_site: IComponentSite,
-            **kwargs,
+        self,
+        _component_site: IComponentSite,
+        **_kwargs,
     ):
-        print('create cache of redis')
+        print("create cache of redis")  # noqa
 
     def get_value(
-            self,
-            key_name: str,
-    ) -> Optional[bytes]:
+        self,
+        key_name: str,
+    ) -> bytes | None:
         pass
 
     def set_value(
-            self,
-            key_name: str,
-            value: Optional[bytes],
-            expire: timedelta,
+        self,
+        _key_name: str,
+        _value: bytes | None,
+        expire: timedelta,
     ) -> bool:
-        pass
+        return bool(expire.total_seconds())

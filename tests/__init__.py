@@ -1,6 +1,6 @@
 __all__ = [
-    'TestCaches',
-    'TestConfigs',
+    "TestCaches",
+    "TestConfigs",
 ]
 
 from .test_caches import TestCaches

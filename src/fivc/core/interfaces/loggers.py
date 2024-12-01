@@ -1,6 +1,8 @@
-from typing import Optional
+from __future__ import annotations
 
-from . import IComponent, abstractmethod
+from abc import abstractmethod
+
+from fivc.core import IComponent
 
 
 class ILogger(IComponent):
@@ -10,10 +12,10 @@ class ILogger(IComponent):
 
     @abstractmethod
     def info(
-            self,
-            msg: Optional[str] = None,
-            attrs: Optional[dict] = None,
-            error: Optional[Exception] = None,
+        self,
+        msg: str | None = None,
+        attrs: dict | None = None,
+        error: Exception | None = None,
     ) -> None:
         """
         log info
@@ -21,10 +23,10 @@ class ILogger(IComponent):
 
     @abstractmethod
     def warning(
-            self,
-            msg: Optional[str] = None,
-            attrs: Optional[dict] = None,
-            error: Optional[Exception] = None,
+        self,
+        msg: str | None = None,
+        attrs: dict | None = None,
+        error: Exception | None = None,
     ) -> None:
         """
         log warning
@@ -32,10 +34,10 @@ class ILogger(IComponent):
 
     @abstractmethod
     def error(
-            self,
-            msg: Optional[str] = None,
-            attrs: Optional[dict] = None,
-            error: Optional[Exception] = None,
+        self,
+        msg: str | None = None,
+        attrs: dict | None = None,
+        error: Exception | None = None,
     ) -> None:
         """
         log error
