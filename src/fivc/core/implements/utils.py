@@ -22,7 +22,11 @@ def load_component_site(
 
     if not filename:
         fmt = "yml"
-        filename = path.join(path.dirname(path.dirname(path.realpath(__file__))), "fixtures", "configs_basics.yml")
+        filename = path.join(
+            path.dirname(path.dirname(path.realpath(__file__))),
+            "fixtures",
+            "configs_basics.yml"
+        )
 
     with open(filename) as f:
         site_builder.loads(site, f, fmt=fmt)

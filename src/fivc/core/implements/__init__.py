@@ -91,7 +91,9 @@ class ComponentSiteBuilder(IComponentSiteBuilder):
                     err_msg = f"invalid component interface {service_interface_name}"
                     raise LookupError(err_msg) from e
 
-                component_site.register_component(service_interface, service_instance, name=service_name)
+                component_site.register_component(
+                    service_interface, service_instance, name=service_name
+                )
 
     def _parse(self, configs: TextIO, fmt: str = "json"):
         if fmt == "json":
