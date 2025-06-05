@@ -1,0 +1,212 @@
+# FIVC 项目 Cursor 开发规则
+
+## 项目概述
+FIVC (Five Component Framework) 是一个轻量级的 Python 组件管理框架，提供组件注册、查询和依赖注入机制。
+
+## 代码风格规范
+
+### Python 代码规范
+- 使用 Python 3.8+ 语法特性
+- 遵循 PEP 8 代码风格规范
+- 使用类型注解 (Type Hints)
+- 优先使用 `from __future__ import annotations` 进行延迟注解
+- 函数和类必须有文档字符串
+
+### 导入规范
+```python
+# 标准库导入
+import os
+from abc import ABCMeta, abstractmethod
+from typing import TextIO
+
+# 第三方库导入
+import yaml
+
+# 本地导入
+from fivc.core.interfaces import IComponent
+```
+
+### 命名规范
+- 类名：使用 PascalCase (如 `ComponentSite`)
+- 函数名：使用 snake_case (如 `get_component`)
+- 常量：使用 UPPER_SNAKE_CASE (如 `DEFAULT_CONFIG`)
+- 接口类：以 `I` 开头 (如 `IComponent`, `IConfig`)
+- 私有成员：以单下划线开头 (如 `_private_method`)
+
+## 架构模式
+
+### 组件接口设计
+- 所有接口继承自 `IComponent`
+- 使用抽象基类 `ABCMeta` 定义接口
+- 接口方法必须使用 `@abstractmethod` 装饰器
+- 接口应该简洁，职责单一
+
+### 组件实现规范
+- 实现类必须实现对应接口的所有抽象方法
+- 实现类应放在 `implements` 目录下
+- 配置相关类以 `Config` 结尾
+- 缓存相关类以 `Cache` 结尾
+
+### 依赖注入模式
+- 使用 `IComponentSite` 进行组件注册和查询
+- 通过 `query_component` 获取组件实例
+- 避免硬编码依赖，使用配置文件管理组件
+
+## 文件组织结构
+
+```
+src/fivc/
+├── core/
+│   ├── interfaces/     # 接口定义
+│   ├── implements/     # 接口实现
+│   ├── fixtures/       # 测试夹具
+│   └── __init__.py
+├── __init__.py
+└── __about__.py
+```
+
+## 测试规范
+
+### 测试文件命名
+- 测试文件以 `test_` 开头
+- 测试类以 `Test` 开头
+- 测试方法以 `test_` 开头
+
+### 测试结构
+```python
+import unittest
+from fivc.core.implements.utils import load_component_site
+from fivc.core.interfaces.utils import query_component
+
+class TestComponentName(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        # 类级别的设置
+        pass
+    
+    def test_specific_functionality(self):
+        # 具体功能测试
+        pass
+```
+
+## 配置管理
+
+### 环境变量
+- 配置文件路径通过环境变量指定
+- 使用大写字母和下划线 (如 `CONFIG_JSON`, `CONFIG_YAML`)
+
+### 配置文件格式
+- 支持 JSON 和 YAML 格式
+- YAML 配置优先使用，JSON 作为备选
+- 配置结构保持一致性
+
+## 错误处理
+
+### 异常处理原则
+- 使用具体的异常类型而不是通用 `Exception`
+- 提供有意义的错误消息
+- 在适当的层级处理异常
+- 记录错误信息到日志
+
+### 常见异常模式
+```python
+def get_component(self, interface: type, name: str = "") -> IComponent:
+    component = self.query_component(interface, name)
+    if component is None:
+        raise ComponentNotFoundException(f"Component {interface.__name__} with name '{name}' not found")
+    return component
+```
+
+## 性能考虑
+
+### 缓存策略
+- 合理使用缓存避免重复计算
+- 提供内存和 Redis 两种缓存选项
+- 注意缓存失效和更新策略
+
+### 资源管理
+- 正确关闭文件和网络连接
+- 使用上下文管理器 (`with` 语句)
+- 避免内存泄漏
+
+## 文档规范
+
+### 代码文档
+```python
+def query_component(
+    self,
+    interface: type,
+    name: str = "",
+) -> IComponent | None:
+    """
+    查询组件实例
+    
+    Args:
+        interface: 组件接口类型
+        name: 组件名称，默认为空字符串
+        
+    Returns:
+        组件实例，如果未找到则返回 None
+    """
+```
+
+### README 维护
+- 保持安装说明的准确性
+- 提供完整的使用示例
+- 更新版本和依赖信息
+
+## 版本管理
+
+### 语义化版本
+- 遵循 SemVer 规范 (major.minor.patch)
+- 版本信息在 `__about__.py` 中维护
+- 重大变更需要更新 major 版本号
+
+### 依赖管理
+- 在 `requirements.txt` 中指定具体版本
+- 在 `pyproject.toml` 中配置项目元数据
+- 定期更新依赖并测试兼容性
+
+## 开发工具配置
+
+### MyPy 类型检查
+- 启用严格模式
+- 为所有公共 API 提供类型注解
+- 运行 `mypy --install-types --non-interactive src/fivc tests`
+
+### 代码格式化
+- 使用 black 或类似工具格式化代码
+- 行长度限制为 88 字符
+- 使用 isort 整理导入语句
+
+## 安全考虑
+
+### 输入验证
+- 验证配置文件内容
+- 检查组件注册参数
+- 防止代码注入攻击
+
+### 权限控制
+- 最小权限原则
+- 安全的文件路径处理
+- 敏感信息不硬编码
+
+## Git 提交规范
+
+### 提交消息格式
+```
+type(scope): description
+
+[optional body]
+
+[optional footer]
+```
+
+### 提交类型
+- `feat`: 新功能
+- `fix`: 错误修复
+- `docs`: 文档更新
+- `style`: 代码格式调整
+- `refactor`: 代码重构
+- `test`: 测试相关
+- `chore`: 构建过程或辅助工具的变动 

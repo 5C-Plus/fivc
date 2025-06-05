@@ -22,7 +22,7 @@ class LoggerImpl:
         attrs: dict | None = None,  # noqa
         error: Exception | None = None,
     ):
-        err_msg = error and format_exc() or ""
+        err_msg = (error and format_exc()) or ""
         self.logger.info(msg or err_msg)
 
     def warning(
@@ -31,7 +31,7 @@ class LoggerImpl:
         attrs: dict | None = None,  # noqa
         error: Exception | None = None,
     ):
-        err_msg = error and format_exc() or ""
+        err_msg = (error and format_exc()) or ""
         self.logger.warning(msg or err_msg)
 
     def error(
@@ -40,7 +40,7 @@ class LoggerImpl:
         attrs: dict | None = None,  # noqa
         error: Exception | None = None,
     ):
-        err_msg = error and format_exc() or ""
+        err_msg = (error and format_exc()) or ""
         self.logger.error(msg or err_msg)
 
 
