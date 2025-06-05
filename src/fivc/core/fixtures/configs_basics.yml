@@ -21,3 +21,9 @@
       name: 'Redis'
 
   class: fivc.core.implements.caches_redis.CacheImpl
+
+- entries:
+    - interface: fivc.core.interfaces.caches.ICache
+      name: 'Memory'
+
+  class: fivc.core.implements.caches_mem.CacheImpl
