@@ -3,6 +3,46 @@
 ## 项目概述
 FIVC (Five Component Framework) 是一个轻量级的 Python 组件管理框架，提供组件注册、查询和依赖注入机制。
 
+**当前版本**: v0.1.1  
+**发布状态**: 准备发布到 PyPI  
+**Python 支持**: 3.8+  
+**许可证**: MIT License
+
+## 项目结构
+
+### 完整目录结构
+```
+fivc/
+├── src/fivc/           # 主要源代码
+│   ├── core/           # 核心模块
+│   │   ├── interfaces/ # 接口定义
+│   │   ├── implements/ # 接口实现
+│   │   └── fixtures/   # 测试夹具
+│   ├── __about__.py    # 版本信息
+│   └── __init__.py     # 包初始化
+├── tests/              # 测试代码
+├── docs/               # 项目文档（已迁移）
+│   ├── README.md       # 文档索引
+│   ├── RELEASE_NOTES.md    # 发布说明
+│   ├── PUBLISH_READY.md    # 发布准备
+│   ├── DEVELOPMENT.md      # 开发指南
+│   └── PROJECT_STATUS.md   # 项目状态
+├── scripts/            # 脚本工具
+│   └── check_release.py    # 发布检查脚本
+├── fixtures/           # 测试数据
+├── dist/               # 构建产物
+├── pyproject.toml      # 项目配置
+├── ruff.toml           # 代码检查配置
+├── uv.lock             # uv 锁定文件
+└── README.md           # 项目主页
+```
+
+### 文档组织规范
+- 所有发布相关文档已迁移到 `docs/` 文件夹
+- `docs/README.md` 作为文档中心索引
+- 项目主 `README.md` 保持简洁，重点突出文档导航
+- 文档使用中文编写，符合项目规范
+
 ## 代码风格规范
 
 ### Python 代码规范
@@ -11,6 +51,7 @@ FIVC (Five Component Framework) 是一个轻量级的 Python 组件管理框架�
 - 使用类型注解 (Type Hints)
 - 优先使用 `from __future__ import annotations` 进行延迟注解
 - 函数和类必须有文档字符串
+- **行长度限制**: 100 字符（已更新）
 
 ### 导入规范
 ```python
@@ -52,18 +93,27 @@ from fivc.core.interfaces import IComponent
 - 通过 `query_component` 获取组件实例
 - 避免硬编码依赖，使用配置文件管理组件
 
-## 文件组织结构
+## 开发工具配置
 
-```
-src/fivc/
-├── core/
-│   ├── interfaces/     # 接口定义
-│   ├── implements/     # 接口实现
-│   ├── fixtures/       # 测试夹具
-│   └── __init__.py
-├── __init__.py
-└── __about__.py
-```
+### uv 包管理器（推荐）
+- 使用 `uv` 进行依赖管理和构建
+- 虚拟环境管理：`uv venv && uv sync`
+- 运行命令：`uv run <command>`
+- 构建项目：`uv build`
+- 发布项目：`uv publish --token <token>`
+
+### Ruff 代码检查和格式化
+- 配置文件：`ruff.toml`
+- 代码检查：`uv run ruff check --fix .`
+- 代码格式化：`uv run ruff format .`
+- 行长度：100 字符
+- 允许 print 语句和中文字符（在脚本中）
+
+### 测试配置
+- 测试框架：pytest
+- 覆盖率要求：≥75%（当前82%）
+- 运行测试：`uv run pytest tests/ -v --cov-fail-under=75`
+- 测试文件命名：`test_*.py`
 
 ## 测试规范
 
@@ -88,6 +138,11 @@ class TestComponentName(unittest.TestCase):
         # 具体功能测试
         pass
 ```
+
+### 测试覆盖率
+- 当前覆盖率：82%
+- 最低要求：75%
+- 重点测试核心功能和接口实现
 
 ## 配置管理
 
@@ -150,10 +205,11 @@ def query_component(
     """
 ```
 
-### README 维护
-- 保持安装说明的准确性
-- 提供完整的使用示例
-- 更新版本和依赖信息
+### 文档组织
+- 所有文档使用中文编写
+- 文档结构化组织在 `docs/` 文件夹
+- 提供完整的导航和索引
+- 包含开发指南、API文档、使用示例
 
 ## 版本管理
 
@@ -163,21 +219,45 @@ def query_component(
 - 重大变更需要更新 major 版本号
 
 ### 依赖管理
-- 在 `requirements.txt` 中指定具体版本
+- 使用 `uv.lock` 锁定依赖版本
 - 在 `pyproject.toml` 中配置项目元数据
 - 定期更新依赖并测试兼容性
 
-## 开发工具配置
+## 发布流程
 
-### MyPy 类型检查
-- 启用严格模式
-- 为所有公共 API 提供类型注解
-- 运行 `mypy --install-types --non-interactive src/fivc tests`
+### 发布前检查
+```bash
+# 运行发布检查脚本
+uv run python scripts/check_release.py
 
-### 代码格式化
-- 使用 black 或类似工具格式化代码
-- 行长度限制为 88 字符
-- 使用 isort 整理导入语句
+# 代码质量检查
+uv run ruff check --fix . && uv run ruff format .
+
+# 运行测试
+uv run pytest tests/ -v --cov-fail-under=75
+
+# 构建项目
+uv build
+```
+
+### 发布命令
+```bash
+# 使用 API token 发布（推荐）
+uv publish --token <your-pypi-token>
+
+# 使用用户名密码
+uv publish -u <username> -p <password>
+
+# 测试发布
+uv publish --repository testpypi --token <test-token>
+```
+
+### 发布后验证
+```bash
+# 验证 PyPI 页面
+# 测试安装：pip install fivc
+# 验证功能：python -c "import fivc; print(fivc.__version__)"
+```
 
 ## 安全考虑
 
@@ -209,4 +289,67 @@ type(scope): description
 - `style`: 代码格式调整
 - `refactor`: 代码重构
 - `test`: 测试相关
-- `chore`: 构建过程或辅助工具的变动 
+- `chore`: 构建过程或辅助工具的变动
+
+## 常用开发命令
+
+### 环境设置
+```bash
+# 创建虚拟环境并安装依赖
+uv venv && uv sync
+
+# 激活虚拟环境
+source .venv/bin/activate  # Linux/macOS
+.venv\Scripts\activate     # Windows
+```
+
+### 开发工作流
+```bash
+# 代码检查和格式化
+uv run ruff check --fix . && uv run ruff format .
+
+# 运行测试
+uv run pytest tests/ -v --cov-fail-under=75
+
+# 构建项目
+uv build
+
+# 发布检查
+uv run python scripts/check_release.py
+```
+
+### 项目状态检查
+```bash
+# 查看项目状态
+cat docs/PROJECT_STATUS.md
+
+# 查看发布准备情况
+cat docs/PUBLISH_READY.md
+
+# 查看开发指南
+cat docs/DEVELOPMENT.md
+```
+
+## 项目质量标准
+
+### 代码质量
+- ✅ Ruff 检查通过
+- ✅ 代码格式化完成
+- ✅ 类型注解完整
+- ✅ 文档字符串完整
+
+### 测试质量
+- ✅ 测试覆盖率 ≥75%（当前82%）
+- ✅ 所有测试通过
+- ✅ 功能测试完整
+
+### 文档质量
+- ✅ 结构化文档组织
+- ✅ 完整的使用指南
+- ✅ 详细的开发文档
+- ✅ 清晰的API文档
+
+---
+
+*最后更新: 2024年*  
+*项目状态: 准备发布 🚀* 
