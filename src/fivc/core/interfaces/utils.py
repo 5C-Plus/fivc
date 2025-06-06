@@ -9,6 +9,7 @@ from typing import (
 
 from . import IComponent, IComponentSite  # noqa
 
+
 _Int = TypeVar("_Int")  # interface class
 _Imp = TypeVar("_Imp")  # implement class
 
@@ -29,9 +30,7 @@ def query_component(
     return cast_component(i, interface_type) if i else None
 
 
-def implements(
-    interfaces: type[_Int] | list[type[_Int]]
-) -> Callable[[type[_Imp]], type[_Imp]]:
+def implements(interfaces: type[_Int] | list[type[_Int]]) -> Callable[[type[_Imp]], type[_Imp]]:
     if issubclass(interfaces, IComponent):
         interfaces = [interfaces]
     else:
@@ -74,8 +73,5 @@ def import_string(dotted_path: str):
     try:
         return getattr(module, class_name)
     except AttributeError as e:
-        msg = (
-            f'Module "{module_path}" does not define a '
-            f'"{class_name}" attribute/class'
-        )
+        msg = f'Module "{module_path}" does not define a "{class_name}" attribute/class'
         raise ImportError(msg) from e

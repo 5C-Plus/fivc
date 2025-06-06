@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 from fivc.core import IComponent
 
+
 if TYPE_CHECKING:
     from datetime import timedelta
 

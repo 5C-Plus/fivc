@@ -1,0 +1,58 @@
+# Ruff 配置文件
+
+# 每行最大字符数
+line-length = 100
+
+# 目标Python版本
+target-version = "py38"
+
+[lint]
+# 选择要启用的规则
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # Pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "PIE", # flake8-pie
+    "SIM", # flake8-simplify
+]
+
+# 忽略的规则
+ignore = [
+    "T201",  # 允许 print 语句
+    "RUF001", # 允许全角字符
+    "RUF003", # 允许全角字符
+]
+
+# 脚本文件允许更宽松的规则
+[lint.per-file-ignores]
+"scripts/*.py" = [
+    "T201",  # 允许 print 语句
+    "F401",  # 允许未使用的导入
+    "F841",  # 允许未使用的变量
+    "RUF001", # 允许全角字符
+    "RUF003", # 允许全角字符
+]
+
+# 测试文件允许更宽松的规则
+"tests/*.py" = [
+    "F401",  # 允许未使用的导入
+    "F841",  # 允许未使用的变量
+]
+
+[lint.isort]
+# isort 配置
+known-first-party = ["fivc"]
+force-single-line = false
+lines-after-imports = 2
+
+[format]
+# 代码格式化配置
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto" 

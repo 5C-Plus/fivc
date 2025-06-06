@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 from fivc.core import IComponentSite, utils
 from fivc.core.interfaces import caches
 
+
 if TYPE_CHECKING:
     from datetime import timedelta
 
@@ -74,10 +75,7 @@ class CacheImpl:
     def _cleanup_expired(self):
         """清理过期的缓存项"""
         current_time = time.time()
-        expired_keys = [
-            key for key, item in self._cache.items()
-            if current_time > item.expire_time
-        ]
+        expired_keys = [key for key, item in self._cache.items() if current_time > item.expire_time]
 
         for key in expired_keys:
             del self._cache[key]

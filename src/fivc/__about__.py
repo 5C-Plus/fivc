@@ -15,10 +15,10 @@ License: MIT
 """
 
 # 当前版本号
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 # 版本历史
-__version_info__ = (0, 1, 0)
+__version_info__ = (0, 1, 1)
 
 # 发布状态
 __status__ = "beta"

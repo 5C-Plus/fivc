@@ -8,6 +8,7 @@ from fivc.core.implements import (
     ComponentSiteBuilder,
 )
 
+
 if TYPE_CHECKING:
     from fivc.core import IComponentSite
 
@@ -23,9 +24,7 @@ def load_component_site(
     if not filename:
         fmt = "yml"
         filename = path.join(
-            path.dirname(path.dirname(path.realpath(__file__))),
-            "fixtures",
-            "configs_basics.yml"
+            path.dirname(path.dirname(path.realpath(__file__))), "fixtures", "configs_basics.yml"
         )
 
     with open(filename) as f:
